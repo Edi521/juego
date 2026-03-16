@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Flowers - Unificado</title>
+  <title>Juego</title>
 <style>
   *,
   *::before,
@@ -44,7 +44,6 @@
     --play-triangle-width: calc(var(--play-triangle-size) * 1.34);
     --play-triangle-height: calc(var(--play-triangle-size) * 1.1);
     --bloom-speed: 1.6s;
-    --mobile-safe-top: env(safe-area-inset-top, 0px);
   }
 
   body {
@@ -53,7 +52,6 @@
     align-items: flex-end;
     justify-content: center;
     min-height: 100vh;
-    min-height: 100dvh;
     background-color: var(--dark-color);
     overflow: hidden;
     perspective: 1000px;
@@ -85,7 +83,7 @@
   }
 
   .titulo {
-    top: calc(var(--mobile-safe-top) + clamp(0.25rem, 1.5vh, 0.9rem));
+    top: clamp(0.25rem, 1.5vh, 0.9rem);
     bottom: auto;
     font-family: "Arial Narrow", Arial, sans-serif;
     font-size: var(--title-size);
@@ -127,9 +125,6 @@
   .flowers {
     position: relative;
     z-index: 10;
-    width: min(92vw, 72rem);
-    height: min(78vh, 52rem);
-    height: min(78dvh, 52rem);
     transform: translateY(var(--scene-shift-y)) scale(var(--scene-scale));
     transform-origin: bottom center;
   }
@@ -791,6 +786,20 @@
       0 0 38px rgba(250, 204, 21, 0.35),
       inset 0 0 10px rgba(250, 204, 21, 0.2);
     transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-appearance: none;
+    appearance: none;
+    outline: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  }
+
+  .play-button:focus,
+  .play-button:active,
+  .play-button:focus-visible {
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .intro-ready .play-button {
@@ -910,124 +919,170 @@
 
   @media (max-width: 640px) {
     :root {
-      --scene-scale: 0.62;
-      --scene-shift-y: 14vmin;
-      --title-width: min(94vw, 24rem);
-      --title-size: clamp(0.88rem, 2.8vw + 0.45rem, 1.05rem);
-      --title-spacing: 0.02rem;
-      --lyrics-bottom: clamp(11rem, 24vh, 16rem);
+      --scene-scale: 0.9;
+      --scene-shift-y: -6vmin;
+      --title-width: 90vw;
+      --title-size: clamp(0.9rem, 2.8vw, 1.05rem);
+      --title-spacing: 0.03rem;
+      --lyrics-size: clamp(0.82rem, 3.2vw, 1rem);
+      --lyrics-spacing: 0.03rem;
+      --lyrics-bottom: 13rem;
+      --play-size: 145px;
       --play-border: 6px;
-      --play-size: min(48vw, 170px);
-    }
-
-    body {
-      min-height: 100dvh;
-    }
-
-    .flowers {
-      width: 100vw;
-      height: 68dvh;
-      max-height: 34rem;
-      transform-origin: bottom center;
-    }
-
-    .flower {
-      bottom: 6vmin;
     }
 
     .titulo {
-      top: calc(var(--mobile-safe-top) + 0.45rem);
-      width: min(94vw, 24rem);
-      padding-inline: 0.65rem;
+      top: 0.7rem;
+      width: 90vw;
+      padding-inline: 0.45rem;
       line-height: 1.45;
-      text-wrap: balance;
     }
 
     #lyrics {
-      width: min(92vw, 24rem);
-      padding-inline: 0.5rem;
+      width: 88vw;
+      padding-inline: 0.4rem;
+      bottom: 11.8rem;
     }
 
-    .night {
-      filter: blur(0.18vmin);
+    .flowers {
+      transform: translateY(var(--scene-shift-y)) scale(var(--scene-scale));
+    }
+
+    .flower {
+      bottom: 2vmin;
+    }
+
+    .flower--1 .flower__line {
+      height: 62vmin;
+    }
+
+    .flower--2 .flower__line {
+      height: 55vmin;
+    }
+
+    .flower--3 .flower__line {
+      height: 50vmin;
     }
 
     .play-label {
-      margin-bottom: 0.8rem;
+      margin-bottom: 0.7rem;
     }
 
     .play-label__text {
-      font-size: clamp(3.4rem, 16vw, 5rem);
+      font-size: clamp(3rem, 15vw, 4.5rem);
       letter-spacing: 0.01em;
     }
 
-    .play-label__triangles {
-      margin-bottom: clamp(0.26rem, 0.7vw, 0.48rem);
+    .play-button__icon {
+      border-top-width: 19px;
+      border-bottom-width: 19px;
+      border-left-width: 32px;
+      margin-left: 7px;
+    }
+  }
+
+  @media (max-width: 480px) and (orientation: portrait) {
+    :root {
+      --scene-scale: 1.02;
+      --scene-shift-y: -14vmin;
+      --title-width: 88vw;
+      --title-size: clamp(0.82rem, 3.6vw, 0.98rem);
+      --title-spacing: 0.02rem;
+      --lyrics-size: clamp(0.75rem, 3.5vw, 0.92rem);
+      --lyrics-spacing: 0.02rem;
+      --lyrics-bottom: 12.2rem;
+      --play-size: 120px;
+      --play-border: 5px;
     }
 
-    .play-label__triangle--red {
-      left: -0.1rem;
-      top: 0.01rem;
+    body {
+      align-items: flex-end;
+      overflow: hidden;
+    }
+
+    .titulo {
+      top: 0.8rem;
+      width: 88vw;
+      padding-inline: 0.35rem;
+      line-height: 1.4;
+    }
+
+    #lyrics {
+      width: 86vw;
+      padding-inline: 0.35rem;
+      bottom: 10.8rem;
+    }
+
+    .flowers {
+      transform: translateY(var(--scene-shift-y)) scale(var(--scene-scale));
+    }
+
+    .flower {
+      bottom: 0;
+    }
+
+    .flower--1 .flower__line {
+      height: 66vmin;
+    }
+
+    .flower--2 .flower__line {
+      height: 58vmin;
+    }
+
+    .flower--3 .flower__line {
+      height: 52vmin;
+    }
+
+    #intro-screen {
+      gap: 0.9rem;
+      padding: 1rem;
+    }
+
+    .play-label {
+      margin-bottom: 0.45rem;
+    }
+
+    .play-label__text {
+      font-size: clamp(2.6rem, 14vw, 3.5rem);
+    }
+
+    .play-button {
+      width: var(--play-size);
+      height: var(--play-size);
     }
 
     .play-button__icon {
-      border-top-width: 20px;
-      border-bottom-width: 20px;
-      border-left-width: 34px;
-      margin-left: 8px;
+      border-top-width: 16px;
+      border-bottom-width: 16px;
+      border-left-width: 28px;
+      margin-left: 6px;
+    }
+  }
+
+  @media (max-width: 480px) and (min-height: 800px) and (orientation: portrait) {
+    :root {
+      --scene-scale: 1.1;
+      --scene-shift-y: -18vmin;
+    }
+
+    .titulo {
+      top: 0.95rem;
+    }
+
+    #lyrics {
+      bottom: 11.5rem;
     }
   }
 
   @media (max-height: 720px) {
     :root {
-      --scene-scale: 0.74;
-      --scene-shift-y: 6vmin;
-      --title-bottom: clamp(21rem, 50vh, 26rem);
-      --lyrics-bottom: clamp(14rem, 30vh, 20rem);
-    }
-
-    .flowers {
-      height: 70dvh;
+      --scene-scale: 0.82;
+      --scene-shift-y: -2vmin;
+      --lyrics-bottom: 10.5rem;
     }
 
     .titulo {
-      top: calc(var(--mobile-safe-top) + 0.2rem);
-    }
-  }
-
-  @media (max-width: 480px) {
-    :root {
-      --scene-scale: 0.54;
-      --scene-shift-y: 18vmin;
-      --title-width: min(95vw, 21rem);
-      --title-size: clamp(0.8rem, 2.6vw + 0.42rem, 0.96rem);
-    }
-
-    .flowers {
-      height: 64dvh;
-      max-height: 30rem;
-    }
-
-    .titulo {
-      top: calc(var(--mobile-safe-top) + 0.35rem);
-      line-height: 1.38;
-    }
-  }
-
-  @media (max-width: 640px) and (max-height: 740px) {
-    :root {
-      --scene-scale: 0.5;
-      --scene-shift-y: 20vmin;
-    }
-
-    .flowers {
-      height: 60dvh;
-      max-height: 27rem;
-    }
-
-    .titulo {
-      width: min(95vw, 20rem);
-      font-size: clamp(0.76rem, 2.5vw + 0.4rem, 0.9rem);
+      top: 0.4rem;
     }
   }
 
@@ -1179,20 +1234,17 @@
   }
 
   @keyframes moving-flower-1 {
-    0%,
-    100% { transform: rotate(2deg); }
+    0%, 100% { transform: rotate(2deg); }
     50% { transform: rotate(-2deg); }
   }
 
   @keyframes moving-flower-2 {
-    0%,
-    100% { transform: rotate(18deg); }
+    0%, 100% { transform: rotate(18deg); }
     50% { transform: rotate(14deg); }
   }
 
   @keyframes moving-flower-3 {
-    0%,
-    100% { transform: rotate(-18deg); }
+    0%, 100% { transform: rotate(-18deg); }
     50% { transform: rotate(-12deg); }
   }
 
@@ -1281,14 +1333,12 @@
   }
 
   @keyframes moving-grass {
-    0%,
-    100% { transform: rotate(-48deg) rotateY(40deg); }
+    0%, 100% { transform: rotate(-48deg) rotateY(40deg); }
     50% { transform: rotate(-44deg) rotateY(40deg); }
   }
 
   @keyframes moving-grass--2 {
-    0%,
-    100% { transform: scale(0.5) rotate(75deg) rotateX(10deg) rotateY(-200deg); }
+    0%, 100% { transform: scale(0.5) rotate(75deg) rotateX(10deg) rotateY(-200deg); }
     50% { transform: scale(0.5) rotate(80deg) rotateX(10deg) rotateY(-200deg); }
   }
 
@@ -1341,38 +1391,32 @@
   }
 
   @keyframes flower-g-right-ans {
-    0%,
-    100% { transform: rotate(0deg); }
+    0%, 100% { transform: rotate(0deg); }
     50% { transform: rotate(4deg); }
   }
 
   @keyframes flower-g-right-ans--2 {
-    0%,
-    100% { transform: rotateY(180deg) rotate(0deg); }
+    0%, 100% { transform: rotateY(180deg) rotate(0deg); }
     50% { transform: rotateY(180deg) rotate(-4deg); }
   }
 
   @keyframes leaf-ans-1 {
-    0%,
-    100% { transform: rotate(0deg); }
+    0%, 100% { transform: rotate(0deg); }
     50% { transform: rotate(4deg); }
   }
 
   @keyframes leaf-ans-2 {
-    0%,
-    100% { transform: rotateY(180deg) rotate(10deg); }
+    0%, 100% { transform: rotateY(180deg) rotate(10deg); }
     50% { transform: rotateY(180deg) rotate(14deg); }
   }
 
   @keyframes leaf-ans-3 {
-    0%,
-    100% { transform: rotate(20deg); }
+    0%, 100% { transform: rotate(20deg); }
     50% { transform: rotate(24deg); }
   }
 
   @keyframes leaf-ans-4 {
-    0%,
-    100% { transform: rotateY(180deg) rotate(10deg); }
+    0%, 100% { transform: rotateY(180deg) rotate(10deg); }
     50% { transform: rotateY(180deg) rotate(14deg); }
   }
 
@@ -1642,6 +1686,8 @@ let titleTimeoutId = null;
 function startExperience() {
   if (started) return;
   started = true;
+
+  if (startBtn) startBtn.blur();
 
   introScreen.classList.add('hidden');
   document.body.classList.remove('container');
